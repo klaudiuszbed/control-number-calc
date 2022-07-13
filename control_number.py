@@ -26,3 +26,5 @@ def get_control_number(land_reg_id, court):
     to_mod = sum(result)  # summing list
     control_number = to_mod % 10
     return control_number
+
+
