@@ -10,21 +10,21 @@ ascii_dict = {
             }
 
 
-def get_control_number(land_reg_id, court):
+def get_control_number(land_reg_id: str, court: str) -> int:
     """Calculate control number based on land and mortgage register number and court department code."""
     combination = []
     for value in court:
-        translated = value.translate(ascii_dict)  # changing each value from court code
-        combination.append(int(translated))  # adding encoded values to combination list
+        translated = value.translate(ascii_dict)  # replace each court  character based on ascii_dict
+        combination.append(int(translated))  # add encoded values to combination list
 
-    splitted = [int(i) for i in str(land_reg_id)]  # splitting the id
-    for number in splitted:
-        combination.append(number)  # adding every number to the combination from previously splitted id
+    splitted_id = [int(i) for i in str(land_reg_id)]  # convert land_reg_id string into list of integers
 
-    result = [combination[i] * multipliers[i] for i in range(len(combination))]  # multiplying list by list of multipliers
+    for number in splitted_id:
+        combination.append(number)  # add every number to the combination from previously splitted id
 
-    to_mod = sum(result)  # summing list
-    control_number = to_mod % 10
+    result = [combination[i] * multipliers[i] for i in range(len(combination))]  # multiply combination list by list of multipliers
+    combination_sum = sum(result)  # sum each value of the list
+
+    control_number = combination_sum % 10
     return control_number
-
 
